@@ -1,5 +1,5 @@
 '''
-Script para exportar os jobs do projeto BIGDATA do Rundeck para um arquivo .JSON
+Script para exportar os jobs de projeto no Rundeck para outro e arnazenar em um arquivo .JSON
 
 '''
 

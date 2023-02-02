@@ -1,5 +1,7 @@
 '''
-Script para exportar a estrutura de cada job do projeto BIGDATA do Rundeck para um arquivo .JSON
+Funções para exportar e importar jobs do Rundeck
+Author: Cleverson Ezequiel Silva Sobrinho
+Date: 2023-02-02
 '''
 
 import requests
@@ -43,7 +45,7 @@ def get_job(id):
         # Exibe a mensagem de erro
         raise Exception(f"Erro: {response.status_code}")
 
-def pull_job(project, job, id):
+def pull_job(project='TESTE', job='', id=''):
     #Cabeçalho da solicitação
     headers = {
         "X-Rundeck-Auth-Token": TOKEN,
