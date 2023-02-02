@@ -17,6 +17,8 @@ load_dotenv()
 # Define as informações de autenticação
 TOKEN = os.getenv("TOKEN")
 HOST = os.getenv("HOST")
+SRC_PROJECT = os.getenv("SRC_PROJECT")
+DST_PROJECT = os.getenv("DST_PROJECT")
 
 def get_job(id):
     #Cabeçalho da solicitação
