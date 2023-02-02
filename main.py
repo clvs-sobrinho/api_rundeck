@@ -1,6 +1,7 @@
 '''
 Script para exportar os jobs de projeto no Rundeck para outro e arnazenar em um arquivo .JSON
-
+Author: Cleverson Ezequiel Silva Sobrinho
+Date: 2023-02-02
 '''
 
 import functions
