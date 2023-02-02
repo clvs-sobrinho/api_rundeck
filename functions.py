@@ -35,14 +35,8 @@ def get_job(id):
 
     # Verifica se a resposta é válida
     if response.status_code == 200:
-        #Elimina as tags 'id' e 'uuid' do XML para evitar conflitos
-        root = ElementTree.fromstring(response.text)
-        for parent in root.findall('.//id..'):
-            parent.clear()
-        for parent in root.findall('.//uuid'):
-            parent.clear()
-        job_xml = ElementTree.tostring(root, encoding='unicode')
-        return {id: job_xml}
+        #retorna o job em XML
+        return {id: response.text}
     else:
         # Exibe a mensagem de erro
         raise Exception(f"Erro: {response.status_code}")
@@ -57,10 +51,11 @@ def pull_job(project='TESTE', job='', id=''):
     # URL da API do Rundeck
     url = HOST + "/api/33/project/{project}/jobs/import".format(project=project)
 
-    # Fazer uma solicitação POST para a API do Rundeck com o YAML do job
+    # Fazer uma solicitação POST para a API do Rundeck com o XML do job
     data = {
         "xmlBatch": job,
-        "Content-Type": "x-www-form-urlencoded"
+        "Content-Type": "x-www-form-urlencoded",
+        "uuidOption": "remove"
         }
     response = requests.post(url, headers=headers, data=data)
 
@@ -75,6 +70,10 @@ def pull_job(project='TESTE', job='', id=''):
         else:
             msg = f'Erro ao importar o job: {id}'
             print(msg)
+            with open(id+'.json', 'w') as outfile:
+                json.dump(response.json(), outfile, indent=4)
+            with open(id+'-import.xml', 'w') as outfile:
+                outfile.write(job)
             with open('failed.log', 'a') as outfile:
                 outfile.write(msg + "\n")
     else:
