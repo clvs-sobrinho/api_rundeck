@@ -7,8 +7,6 @@ Date: 2023-02-02
 import requests
 import os
 import json
-import yaml
-from xml.etree import ElementTree
 from dotenv import load_dotenv
 
 # Carrega as variáveis de ambiente
@@ -28,20 +26,24 @@ def get_job(id):
     }
 
     # URL da API do Rundeck
-    url = HOST+"/api/33/job/{id}".format(id=id)
+    url = "{host}/api/33/job/{id}".format(host=HOST, id=id)
 
     # Realiza a solicitação GET
     response = requests.get(url, headers=headers)
 
     # Verifica se a resposta é válida
     if response.status_code == 200:
-        #retorna o job em XML
+        #retorna a estrutura do job em XML
         return {id: response.text}
     else:
         # Exibe a mensagem de erro
         raise Exception(f"Erro: {response.status_code}")
 
 def pull_job(project='TESTE', job='', id=''):
+    '''
+    Função que recebe o XML do job e importa para o projeto informado
+    '''
+    
     #Cabeçalho da solicitação
     headers = {
         "X-Rundeck-Auth-Token": TOKEN,
@@ -49,7 +51,7 @@ def pull_job(project='TESTE', job='', id=''):
     }
 
     # URL da API do Rundeck
-    url = HOST + "/api/33/project/{project}/jobs/import".format(project=project)
+    url = "{host}/api/33/project/{project}/jobs/import".format(host=HOST, project=project)
 
     # Fazer uma solicitação POST para a API do Rundeck com o XML do job
     data = {
@@ -72,10 +74,10 @@ def pull_job(project='TESTE', job='', id=''):
             print(msg)
             with open(id+'.json', 'w') as outfile:
                 json.dump(response.json(), outfile, indent=4)
-            with open(id+'-import.xml', 'w') as outfile:
+            with open(id+'.xml', 'w') as outfile:
                 outfile.write(job)
             with open('failed.log', 'a') as outfile:
                 outfile.write(msg + "\n")
     else:
         # Exibe a mensagem de erro
-        raise Exception(f"Erro: {response.status_code}\n{url}")
+        raise Exception(f"Erro: {response.status_code}")

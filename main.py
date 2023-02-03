@@ -5,9 +5,20 @@ Date: 2023-02-02
 '''
 
 import functions
+"""
+Note que ao importar o arquivo functions.py, as bibliotecas requests e json são importadas automaticamente
+mas para acessar as funções e/ou constantes/variáveis é necessário utilizar o nome do arquivo seguido do nome do objeto
+Ex:
+functions.get_job()
+functions.pull_job()
+functions.requests.get()
+functions.TOKEN
+functions.HOST
+
+"""
 
 # URL da API do Rundeck
-url = functions.HOST + "/api/33/project/{project}/jobs".format(project=functions.SRC_PROJECT)
+url = "{host}/api/33/project/{project}/jobs".format(host=functions.HOST, project=functions.SRC_PROJECT)
 
 #Cabeçalho da solicitação
 headers = {
@@ -21,7 +32,7 @@ jobs_list = []
 
 # Verifica se a resposta é válida
 if response.status_code == 200:
-    # Imprime os dados retornados pela API
+    # Exporta os dados retornados pela API
     jobs = response.json()
     with open('jobs.json', 'w') as outfile:
         functions.json.dump(jobs, outfile, indent=4)
