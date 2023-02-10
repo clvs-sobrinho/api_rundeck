@@ -38,6 +38,7 @@ O projeto possui a seguinte estrutura:
 ├── .gitignore
 ├── README.md
 ├── main.py
+├── export_jobs.py
 ├── functions.py
 ```
 
@@ -51,4 +52,7 @@ Para utilizar o script, é necessário ter o python instalado na máquina. Após
 python .\main.py
 ```
 
+# Documentos
+https://docs.rundeck.com/docs/api/rundeck-api.html
+https://requests.readthedocs.io/en/latest/
 

@@ -1,0 +1,18 @@
+<joblist>
+  <job>
+    <defaultTab>nodes</defaultTab>
+    <description>testando importacao de jobs e alteracao via API</description>
+    <executionEnabled>true</executionEnabled>
+    <id>b505fbbc-357f-4620-8d93-67912d43b2df</id>
+    <loglevel>INFO</loglevel>
+    <name>Testes de Import</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='sequential'>
+      <command>
+        <exec>echo 'teste de api'</exec>
+      </command>
+    </sequence>
+    <uuid>b505fbbc-357f-4620-8d93-67912d43b2df</uuid>
+  </job>
+</joblist>
