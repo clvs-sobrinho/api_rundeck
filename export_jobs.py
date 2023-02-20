@@ -1,7 +1,7 @@
 import functions
 
 # URL da API do Rundeck
-url = "{host}/api/33/project/{project}/jobs".format(host=functions.HOST, project=functions.SRC_PROJECT)
+url = "{host}/api/33/project/{project}/jobs".format(host=functions.HOST, project=functions.DST_PROJECT)
 
 #Cabeçalho da solicitação
 headers = {

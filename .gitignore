@@ -143,3 +143,4 @@ parameter*
 # other stuff
 *.pyc
 *.json
+BIGDATA*/

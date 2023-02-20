@@ -8,6 +8,7 @@ Update: 2023-02-10
 import requests
 import os
 import json
+from datetime import datetime
 from dotenv import load_dotenv
 
 # Carrega as variáveis de ambiente
@@ -58,8 +59,7 @@ def pull_job(project='TESTE', job='', id=''):
     data = {
         "xmlBatch": job,
         "Content-Type": "x-www-form-urlencoded",
-        "uuidOption": "remove",
-        "uuidOption": "preserve"
+        "uuidOption": "remove"
         }
     response = requests.post(url, headers=headers, data=data)
 
@@ -79,7 +79,8 @@ def pull_job(project='TESTE', job='', id=''):
             with open(id+'.xml', 'w') as outfile:
                 outfile.write(job)
             with open('failed.log', 'a') as outfile:
-                outfile.write(msg + "\n")
+                time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+                outfile.write(f'{time}: {msg}\n')
     else:
         # Exibe a mensagem de erro
         raise Exception(f"Erro: {response.status_code}")
@@ -109,7 +110,8 @@ def alter_job(project='TESTE', job='', id=''):
             msg = f'Job alterado com sucesso: {id} --> Novo id: {response.json()["succeeded"][0]["id"]}'
             print(msg)
             with open('succeeded.log', 'a') as outfile:
-                outfile.write(msg + "\n")
+                time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+                outfile.write(f'{time}: {msg}\n')
         else:
             msg = f'Erro ao importar o job: {id}'
             print(msg)
@@ -118,7 +120,8 @@ def alter_job(project='TESTE', job='', id=''):
             with open(id+'.xml', 'w') as outfile:
                 outfile.write(job)
             with open('failed.log', 'a') as outfile:
-                outfile.write(msg + "\n")
+                time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+                outfile.write(f'{time}: {msg}\n')
     else:
         # Exibe a mensagem de erro
         raise Exception(f"Erro: {response.status_code}")
@@ -143,6 +146,9 @@ def export_job(id='', group='', project='jobs_xml'):
     with open(os.path.join(pwd,id+'.xml'), 'w') as outfile:
         outfile.write(job[id])
     print(f'Job exportado com sucesso: {id}')
+    with open('export.log', 'a') as outfile:
+        time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+        outfile.write(f'export : {id} --> {pwd} {time}' + "\n")
 
 def delete_job(id=''):
     #Cabeçalho da solicitação
